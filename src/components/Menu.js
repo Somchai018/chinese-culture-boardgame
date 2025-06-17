@@ -9,7 +9,7 @@ export default function Menu({ onStart }) {
         textAlign: "center",
         height: "100vh",
         overflow: "hidden",
-        backgroundImage: 'url("/images/bg_pattern.jpg")',
+        backgroundImage: 'url("public/images/ancestor.png")',
         backgroundSize: "cover",
         backgroundPosition: "center",
         fontFamily: "Kanit, sans-serif",
