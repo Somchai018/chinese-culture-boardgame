@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/chinese-culture-boardgame/static/css/main.32f753e0.css",
+    "main.js": "/chinese-culture-boardgame/static/js/main.9383e2db.js",
+    "index.html": "/chinese-culture-boardgame/index.html",
+    "main.32f753e0.css.map": "/chinese-culture-boardgame/static/css/main.32f753e0.css.map",
+    "main.9383e2db.js.map": "/chinese-culture-boardgame/static/js/main.9383e2db.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.32f753e0.css",
+    "static/js/main.9383e2db.js"
+  ]
+}
