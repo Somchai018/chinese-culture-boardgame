@@ -39,8 +39,9 @@ function BoardGame({ numPlayers, onRestart }) {
             return;
         }
         // เพิ่มเสียงทอยลูกเต๋า
-        const diceAudio = new window.Audio("/sounds/Rolling Dice.mp3");
+        const diceAudio = new window.Audio(process.env.PUBLIC_URL + "/sounds/Rolling Dice.mp3");
         diceAudio.play();
+
 
         setRolling(true);
         setDice(null);
@@ -159,41 +160,41 @@ function BoardGame({ numPlayers, onRestart }) {
     }
 
     function animateMove(playerIdx, steps, onFinish) {
-    if (steps <= 0) {
-        setIsZooming(false); // จบการซูม
-        setZoomTo(null);
-        onFinish && onFinish();
-        return;
-    }
-
-    // 1. ดีเลย์ 1 วิ ก่อนเริ่มซูม
-    setTimeout(() => {
-        // 2. ซูมเข้า
-        setZoomTo(players[playerIdx].pos);
-        setIsZooming(true);
-
-        // 3. เดินทีละช่อง (550ms ต่อก้าว)
-        function walk(remaining) {
-            if (remaining <= 0) {
-                setIsZooming(false);
-                setZoomTo(null);
-                onFinish && onFinish();
-                return;
-            }
-            setPlayers(players => {
-                const p = [...players];
-                let oldPos = p[playerIdx].pos;
-                let newPos = (oldPos + 1) % boardData.length;
-                p[playerIdx] = { ...p[playerIdx], pos: newPos };
-                setZoomTo(newPos);
-                return p;
-            });
-            setTimeout(() => walk(remaining - 1), 550);
+        if (steps <= 0) {
+            setIsZooming(false); // จบการซูม
+            setZoomTo(null);
+            onFinish && onFinish();
+            return;
         }
-        walk(steps);
 
-    }, 1000); // ดีเลย์ 1 วิ ก่อนซูมและเริ่มเดิน
-}
+        // 1. ดีเลย์ 1 วิ ก่อนเริ่มซูม
+        setTimeout(() => {
+            // 2. ซูมเข้า
+            setZoomTo(players[playerIdx].pos);
+            setIsZooming(true);
+
+            // 3. เดินทีละช่อง (550ms ต่อก้าว)
+            function walk(remaining) {
+                if (remaining <= 0) {
+                    setIsZooming(false);
+                    setZoomTo(null);
+                    onFinish && onFinish();
+                    return;
+                }
+                setPlayers(players => {
+                    const p = [...players];
+                    let oldPos = p[playerIdx].pos;
+                    let newPos = (oldPos + 1) % boardData.length;
+                    p[playerIdx] = { ...p[playerIdx], pos: newPos };
+                    setZoomTo(newPos);
+                    return p;
+                });
+                setTimeout(() => walk(remaining - 1), 550);
+            }
+            walk(steps);
+
+        }, 1000); // ดีเลย์ 1 วิ ก่อนซูมและเริ่มเดิน
+    }
 
 
     // Board rendering
@@ -256,7 +257,19 @@ function BoardGame({ numPlayers, onRestart }) {
                     }}>
                         {/* รูปภาพช่อง */}
                         {cell && cell.image &&
-                            <img src={`/images/${cell.image}`} alt="" style={{ width: "90%", height: "90%", objectFit: "contain", position: "absolute", left: "5%", top: "5%" }} />
+                            <img
+                                src={process.env.PUBLIC_URL + "/images/" + cell.image}
+                                alt=""
+                                style={{
+                                    width: "90%",
+                                    height: "90%",
+                                    objectFit: "contain",
+                                    position: "absolute",
+                                    left: "5%",
+                                    top: "5%"
+                                }}
+                            />
+
                         }
                         {/* หมายเลขช่อง */}
                         {cell && (
@@ -278,7 +291,7 @@ function BoardGame({ numPlayers, onRestart }) {
                                 return (
                                     <img
                                         key={p.idx}
-                                        src={`/images/player_${p.idx + 1}.png`}
+                                        src={`${process.env.PUBLIC_URL}/images/player_${p.idx + 1}.png`}
                                         alt={`player${p.idx + 1}`}
                                         style={{
                                             width: 40,
@@ -290,6 +303,7 @@ function BoardGame({ numPlayers, onRestart }) {
                                             zIndex: 10 + order
                                         }}
                                     />
+
                                 );
                             })}
                     </div>
@@ -373,7 +387,7 @@ function BoardGame({ numPlayers, onRestart }) {
                         <>
                             {cell.image &&
                                 <img
-                                    src={`/images/${cell.image}`}
+                                    src={process.env.PUBLIC_URL + "/images/" + cell.image}
                                     alt=""
                                     style={{ width: 120, height: 120, objectFit: "contain", marginBottom: 15 }}
                                 />
@@ -496,13 +510,14 @@ function BoardGame({ numPlayers, onRestart }) {
         <div
             style={{
                 minHeight: "100vh",
-                backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.47), rgba(255,255,255,0.47)), url("/images/bg_pattern.jpg")',
+                backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.47), rgba(255,255,255,0.47)), url(${process.env.PUBLIC_URL}/images/bg_pattern.jpg)`,
                 backgroundSize: "cover",
                 backgroundAttachment: "fixed",
                 padding: 0,
                 position: "relative",
                 fontFamily: "Kanit, sans-serif"
             }}
+
         >
             {/* ปุ่มย้อนกลับ */}
             <button
@@ -528,7 +543,7 @@ function BoardGame({ numPlayers, onRestart }) {
             <div style={{ maxWidth: 1600, margin: "0 auto", padding: "30px 0" }}>
                 <div style={{ textAlign: "center" }}>
                     <img
-                        src="/images/logo.gif"
+                        src={process.env.PUBLIC_URL + "/images/logo.gif"}
                         alt="เดินทางสู่แดนมังกร"
                         style={{ width: 700, maxWidth: "90%", margin: "0 auto", marginBottom: 10, display: "block" }}
                     />
@@ -546,24 +561,24 @@ function BoardGame({ numPlayers, onRestart }) {
                     }}
                 >
                     {/* กล่องกระดาน+ลูกเต๋า */}
-<div style={{ position: "relative" }}>
-  {renderBoard()}
-  {/* ลูกเต๋าอยู่ตรงกลางกระดาน และจะซ่อนตอนซูม */}
-  {(rolling || dice) && !isZooming && (
-    <div
-      style={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        transform: "translate(-50%, -50%)",
-        zIndex: 200,
-        pointerEvents: "none"
-      }}
-    >
-      <Dice value={rolling ? rollingFace : dice || 1} rolling={rolling} />
-    </div>
-  )}
-</div>
+                    <div style={{ position: "relative" }}>
+                        {renderBoard()}
+                        {/* ลูกเต๋าอยู่ตรงกลางกระดาน และจะซ่อนตอนซูม */}
+                        {(rolling || dice) && !isZooming && (
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    left: "50%",
+                                    top: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                    zIndex: 200,
+                                    pointerEvents: "none"
+                                }}
+                            >
+                                <Dice value={rolling ? rollingFace : dice || 1} rolling={rolling} />
+                            </div>
+                        )}
+                    </div>
 
                     {/* Status Panel */}
                     {renderStatus()}

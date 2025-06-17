@@ -9,7 +9,7 @@ export default function Menu({ onStart }) {
         textAlign: "center",
         height: "100vh",
         overflow: "hidden",
-        backgroundImage: 'url("public/images/ancestor.png")',
+        backgroundImage: `url(${process.env.PUBLIC_URL}/images/bg_pattern.jpg)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         fontFamily: "Kanit, sans-serif",
@@ -20,16 +20,16 @@ export default function Menu({ onStart }) {
         color: "#3e2723"
       }}
     >
-      {/* โลโก้ */}
-      <img
-        src="/images/logo.gif"
-        alt="เดินทางสู่แดนมังกร"
-        style={{
-          width: "min(92%, 800px)",
-          marginBottom: "40px",
-          filter: "drop-shadow(4px 6px 6px rgba(0,0,0,0.3))"
-        }}
-      />
+     <img
+  src={process.env.PUBLIC_URL + "/images/logo.gif"}
+  alt="เดินทางสู่แดนมังกร"
+  style={{
+    width: "min(92%, 800px)",
+    marginBottom: "40px",
+    filter: "drop-shadow(4px 6px 6px rgba(0,0,0,0.3))"
+  }}
+/>
+
 
       {/* กล่อง UI */}
       <div
